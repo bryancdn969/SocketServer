@@ -2,9 +2,45 @@ import { Socket } from 'socket.io';
 import socketIO from 'socket.io';
 import { UsuariosLista } from '../classes/usuarios-lista';
 import { Usuario } from '../classes/usuario';
+import { mapa } from '../routes/router';
 
 
 export const usuariosConectados = new UsuariosLista();
+
+// Mapas
+
+export const marcadorNuevo = ( cliente: Socket ) => {
+
+    cliente.on('marcador-nuevo', (marcador) => {
+        
+        mapa.agregarMarcador( marcador );
+        // io.emit( 'marcador-nuevo', marcador );
+        cliente.broadcast.emit('marcador-nuevo',marcador);
+    });
+
+}
+
+
+export const marcadorBorrar = ( cliente: Socket ) => {
+
+    cliente.on('marcador-borrar', (id: string) => {
+        
+        mapa.borrarMarcador( id );
+        // io.emit( 'marcador-nuevo', marcador );
+        cliente.broadcast.emit('marcador-borrar',id);
+    });
+
+}
+
+export const marcadorMover = ( cliente: Socket ) => {
+
+    cliente.on('marcador-mover', (marcador) => {
+        
+        mapa.moverMarcador( marcador );
+        cliente.broadcast.emit('marcador-mover',marcador);
+    });
+
+}
 
 
 export const conectarCliente = ( cliente: Socket, io: socketIO.Server ) => {

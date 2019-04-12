@@ -9,7 +9,7 @@ const router = Router();
 
 
 // Mapa
-const mapa = new Mapa();
+export const mapa = new Mapa();
 const lugares = [
     {
       id: '1',

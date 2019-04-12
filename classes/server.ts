@@ -41,6 +41,13 @@ export default class Server {
 
         this.io.on('connection', cliente => {
 
+            // Mapas
+            socket.marcadorNuevo( cliente );
+
+            socket.marcadorBorrar( cliente );
+
+            socket.marcadorMover( cliente );
+
             // Conectar cliente
             socket.conectarCliente( cliente, this.io );
 
